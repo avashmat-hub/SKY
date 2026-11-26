@@ -18,35 +18,40 @@ export default function App() {
 
     let introShown = false;
 
-    const engine = new ValleyEngine(
-      container,
-      () => {
-        setLoaded(true);
-      },
-      () => {
-        if (!introShown) {
-          introShown = true;
-          setIntroDone(true);
+    let engine: ValleyEngine | null = null;
+    try {
+      engine = new ValleyEngine(
+        container,
+        () => {
+          setLoaded(true);
+        },
+        () => {
+          if (!introShown) {
+            introShown = true;
+            setIntroDone(true);
+          }
+        },
+        (speed) => {
+          if (vignetteRef.current) {
+            // Subtle extra vignette depth synced to camera velocity
+            vignetteRef.current.style.opacity = String(0.68 + speed * 0.32);
+          }
         }
-      },
-      (speed) => {
-        if (vignetteRef.current) {
-          // Subtle extra vignette depth synced to camera velocity
-          vignetteRef.current.style.opacity = String(0.68 + speed * 0.32);
-        }
-      }
-    );
-
-    engineRef.current = engine;
+      );
+      engineRef.current = engine;
+    } catch {
+      setLoaded(true);
+      setIntroDone(true);
+    }
 
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         setActiveSection(null);
-        engine.stopHoverTransition();
+        engine?.stopHoverTransition();
       } else if (e.key === 'ArrowDown' || e.key === 'PageDown') {
-        engine.nudgeScroll(4.5);
+        engine?.nudgeScroll(4.5);
       } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
-        engine.nudgeScroll(-4.5);
+        engine?.nudgeScroll(-4.5);
       }
     };
 
@@ -54,7 +59,7 @@ export default function App() {
 
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
-      engine.dispose();
+      engine?.dispose();
       engineRef.current = null;
     };
   }, []);
@@ -127,7 +132,7 @@ export default function App() {
             </svg>
             <img
               className="logo-img"
-              src="/assets/aistudio/IMG_1030_af4eb529.PNG"
+              src="./assets/aistudio/IMG_1030_af4eb529.PNG"
               alt="SKY RIFT"
             />
           </a>

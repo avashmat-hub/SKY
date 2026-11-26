@@ -112,7 +112,7 @@ export const StudioDrawer: React.FC<StudioDrawerProps> = ({ section, onClose }) 
             <div className="drawer-portrait-wrap">
               <img
                 className="drawer-portrait"
-                src="/assets/aistudio/bGbmMsQb4GPNsdNtT8s-h77J53oe1hvC4i-y-Kk7gJoisC1kJPVkbCTlGiDbKZi_jAN4-EbOA42LW3euDl2Y0kSt_a301c3d8.jpg"
+                src="./assets/aistudio/bGbmMsQb4GPNsdNtT8s-h77J53oe1hvC4i-y-Kk7gJoisC1kJPVkbCTlGiDbKZi_jAN4-EbOA42LW3euDl2Y0kSt_a301c3d8.jpg"
                 alt="Александр Шматков — создатель и дизайнер SKY RIFT"
               />
             </div>
