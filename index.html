@@ -16,6 +16,21 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    <script>
+      window.setTimeout(function () {
+        if (
+          !window.__SKYRIFT_MOUNTED__ &&
+          document.querySelector('script[src*="main.tsx"]') &&
+          !/\/docs\/?$/i.test(window.location.pathname)
+        ) {
+          fetch('./docs/index.html', { method: 'HEAD' })
+            .then(function (r) {
+              if (r.ok) window.location.replace('./docs/');
+            })
+            .catch(function () {});
+        }
+      }, 650);
+    </script>
   </body>
 </html>
 

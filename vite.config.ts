@@ -26,6 +26,12 @@ export default defineConfig(() => {
           if (fs.existsSync(distDir) && fs.existsSync(srcAssets)) {
             fs.cpSync(srcAssets, distAssets, {recursive: true, force: true});
           }
+          // Mirror compiled static site to docs/ for GitHub Pages compatibility
+          const docsDir = path.resolve(__dirname, 'docs');
+          if (fs.existsSync(distDir)) {
+            fs.rmSync(docsDir, {recursive: true, force: true});
+            fs.cpSync(distDir, docsDir, {recursive: true, force: true});
+          }
         },
       },
     ],

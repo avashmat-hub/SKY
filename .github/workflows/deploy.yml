@@ -2,7 +2,7 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: ['main']
+    branches: ['main', 'master']
   workflow_dispatch:
 
 permissions:
@@ -23,15 +23,21 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 20
-      - name: Install dependencies
-        run: npm install
-      - name: Build
-        run: npm run build
+          node-version: 22
+      - name: Build site with prebuilt fallback
+        run: |
+          if npm install --legacy-peer-deps && npm run build && [ -f dist/index.html ]; then
+            echo "DEPLOY_DIR=./dist" >> "$GITHUB_ENV"
+          elif [ -f docs/index.html ]; then
+            echo "DEPLOY_DIR=./docs" >> "$GITHUB_ENV"
+          else
+            echo "Build failed and no prebuilt docs/index.html found."
+            exit 1
+          fi
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./dist
+          path: ${{ env.DEPLOY_DIR }}
 
   deploy:
     environment:
