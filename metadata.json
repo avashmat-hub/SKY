@@ -1,0 +1,6 @@
+{
+  "name": "Fernhollow",
+  "description": "Студия регенеративного дизайна. Прогуляйтесь по ночной долине цветов, которые растут по мере вашего движения.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
